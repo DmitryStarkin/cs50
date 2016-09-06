@@ -28,4 +28,5 @@ int main(void)
     }
    
     printf("%d\n", coins); 
+    return 0;
 }

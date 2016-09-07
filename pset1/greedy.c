@@ -4,7 +4,7 @@
 
 int main(void)
 { 
-    const int VALUESofCOINS[]={25,10,5,1}; 
+    const int VALUESofCOINS[]={25,10,5,1}/*set of nominals, must end with 1*/; 
     int curentValue=0;
     int coins=0;
     float summa=0;

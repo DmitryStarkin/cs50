@@ -3,16 +3,19 @@
 #include <math.h>
 
 
-/*return the number of digits in the number
+/*
+return the number of digits in the number
 */
 int NumberLength(long long int number);
 
-/*return 1 if length is not in the array VALID_LENGTH
+/*
+return 1 if length is not in the array VALID_LENGTH
 otherwise returns 0
 */
 int LenthInvalid(int length, const int* VALID_LENGTH);
 
-/*return 1 if the first digits of the number match a valid number
+/*
+return 1 f the first digit number is in the array FIRST_DIGITS
 otherwise returns 0
 !!!! note 
 the size Digits should be larger than the number of digits of the greatest number in FIRST_DIGITS

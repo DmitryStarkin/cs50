@@ -1,9 +1,10 @@
 #include <cs50.h>
 #include <stdio.h>
 
-int main(void)
-{
-    int height=-1;
+int main(void){
+
+int height=-1;
+
     while(height<0 || height>23) {
         printf("hello, write integer up to 23\n");
         height = GetInt();

@@ -3,21 +3,25 @@
 #include <math.h>
 
 
-/*return the number of digits in the number
+/*
+return the number of digits in the number
 */
 int NumberLength(long long int number);
 
-/*return 1 if length is not in the array VALID_LENGTH
+/*
+return 1 if length is not in the array VALID_LENGTH
 otherwise returns 0
 */
 int LenthInvalid(int length, const int* VALID_LENGTH);
 
-/*return 1 if the first digits of the number match a valid number
+/*
+return 1 if the first digit number is in the array FIRST_DIGITS
 otherwise returns 0
 */
 int IsFirstDigits(const int* FIRST_DIGITS, long long int number);
 
-/*return a checksum off number computed by the algorithm Hans Peter Luhn
+/*
+return a number checksum computed by the algorithm Hans Peter Luhn
 */
 int LuhnControlSum(long long int number);
 

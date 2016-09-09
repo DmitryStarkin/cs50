@@ -3,46 +3,94 @@
 #include<ctype.h>
 #include<cs50.h>
 
+/*
+Remove begin spaces from line and move head pointer to first non space simbol
+*/
+char* RemovBeginSpacesMP(char* line);
 
-char* RemovExtraSpaces(char* line);
-char* RemovBeginSpaces(char* line);
+/*
+Remove begin spaces from line
+*/
+void RemovBeginSpaces(char* line);
+
+/*
+Remove end spaces from line 
+*/
+void RemovEndSpaces(char* line);
+
+/*
+Remove extra spaces from line (leave one space everywhere)
+*/
+void RemovExtraSpaces(char* line);
+
+/*
+Remove All spaces from line
+*/
+void RemovAllSpaces(char* line);
 
 int main(void) {
     int FirstLeterFlag=1;
     
     string name = GetString();
     
-    name = RemovExtraSpaces(name);
+    RemovBeginSpaces(name);
+    RemovExtraSpaces(name);
+    RemovEndSpaces(name);
     
     for (int i=0, len=strlen(name); i<len; i++) {
         if (isalpha(name[i]) && FirstLeterFlag) {
             printf("%c", toupper(name[i]));
             FirstLeterFlag=0;
-    } else if (isblank(name[i]) && !FirstLeterFlag) FirstLeterFlag=1;   
-}
+        } else if (isblank(name[i]) && !FirstLeterFlag) FirstLeterFlag=1;   
+    }
     printf("\n");
 }
 
-
-char* RemovBeginSpaces(char* line){
+char* RemovBeginSpacesMP(char* line){
+   
     for(;*line==32;line++);
 return line;
 }
 
-char* RemovExtraSpaces(char* line){
-char *tmp1;
+void RemovBeginSpaces(char* line){
+    char* tmp=RemovBeginSpacesMP(line);
 
-    line = RemovBeginSpaces(line);
-    tmp1=line;
-    
-    for (char *tmp2; *tmp1; tmp1++){
-        if (*tmp1==32 && *tmp1+1==32){
-            tmp2=RemovBeginSpaces(tmp1+1);
-            for(int diff=tmp2-tmp1; *(tmp2-1); tmp2++){
-                *(tmp2-diff)=*tmp2;
+        if(tmp-line){
+            for(int diff=tmp-line; *(tmp-1); tmp++){
+                *(tmp-diff)=*tmp;
+            }
+        }        
+}
+
+void RemovExtraSpaces(char* line){
+
+    for (char *tmp; *line; line++){
+        if (*line==32 && *(line+1)==32){
+            tmp=RemovBeginSpacesMP(line);
+            for(int diff=tmp-line-1; *(tmp-1); tmp++){
+                *(tmp-diff)=*tmp;
             }
         }
-    } 
-    if (*(tmp1-1)==32) *(tmp1-1)=0;   
-return line;    
+    }       
 }
+
+void RemovAllSpaces(char* line){
+
+    for (char *tmp; *line; line++){
+        if (*line==32){
+            tmp=RemovBeginSpacesMP(line);
+            for(int diff=tmp-line; *(tmp-1); tmp++){
+                *(tmp-diff)=*tmp;
+            }
+        }
+    }       
+}
+
+void RemovEndSpaces(char* line){
+
+    for(;*line;line++);
+    line--;
+    for(;*line==32;line--) *line=0;
+}
+
+

@@ -6,11 +6,13 @@
 
     int main(int argc, string argv[]) {
     if (argc!=2) {
-        printf("Error\n");
+        printf("Usage: ./caesar k\n");
         return 1;
     }
     int key= atoi(argv[1]);
+    printf("plaintext: ");
     string text = GetString();
+    printf("ciphertext: ");
     for (int i=0, len=strlen(text); i<len; i++) {
         if (isalpha(text[i])){
             if (isupper(text[i])) printf("%c", (((text[i]-64)+key)%26)+64);

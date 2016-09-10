@@ -6,7 +6,7 @@
 
 int main(int argc, string argv[]) {
     if (argc!=2) {
-        printf("Error\n");
+        printf("Usage: ./vigenere k\n");
         return 1;
     }
     
@@ -14,7 +14,7 @@ int main(int argc, string argv[]) {
     
     for (int i=0, len=strlen(keyword); i<len; i++){
         if (!isalpha(keyword[i])) {
-            printf("Error\n");
+            printf("Usage: ./vigenere k\n");
             return 1;
         }
     }

@@ -11,16 +11,15 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    FILE* charsetFile;
-    int maxPasswordLength;
-    char* defaultCharsetFile="ASC2AlfabetPrintableSimbol.txt";
-    char* charSet;
-    char* hashedPassword = argv[1];
-    char* curentHashedPassword;
+    const char* DEFAULT_CHARSET="ASC2AlfabetPrintableSimbol.txt";
+    FILE* charsetFile=NULL;
+    int maxPasswordLength=4;
+    char charSet[127];
+    int maxNumberOfCharset=0;
     char salt[3];
-    char curentPassword[5];
-    curentPassword[4]=0;
-    
+    char* curentHashedPassword;
+    char* hashedPassword = argv[1];
+       
     if (argc>2){
         if(!(charsetFile=fopen(argv[2], "rb"))){
             maxPasswordLength= atoi(argv[2]);
@@ -29,45 +28,66 @@ int main(int argc, char* argv[]) {
                 return 1;
             }
             if (argc==4){
-                if(!(charsetFile=fopen(argv[2], "rb"))) printf("Usage: ./crack hashedPassword [maxPasswordLength] [passswordGharSetFileName]\n");
-            }else if(!(charsetFile=fopen(defaultCharsetFile, "rb"))) printf("no CharsetFile\n");  
-        }else maxPasswordLength=4;
+                if(!(charsetFile=fopen(argv[2], "rb"))) 
+                printf("Usage: ./crack hashedPassword [maxPasswordLength] [passswordGharSetFileName]\n");
+                return 1;
+            }  
+        }
     }
+  
+    if(!charsetFile){
+        if(!(charsetFile=fopen(DEFAULT_CHARSET, "rb"))){ 
+        printf("no CharsetFile\n");
+        return 1;
+        }
+    }
+    
+    char simbol;
+    while(fread(&simbol, 1, 1, charsetFile)) { 
+        if (simbol!=0x0a && maxNumberOfCharset<127) {
+            charSet[maxNumberOfCharset]=simbol; 
+            maxNumberOfCharset++;
+        } 
+    }
+     
+    fclose(charsetFile);
+    charSet[maxNumberOfCharset]=0;
+    maxNumberOfCharset--;
         
+    char curentPassword[maxPasswordLength+1];
+    int nextNumberIncharset[maxPasswordLength+1];
+    
+    for(int i=0; i<=maxPasswordLength; i++){
+        curentPassword[i]=0;
+        nextNumberIncharset[i]=0;
+    }  
+    curentPassword[0]=charSet[0];
     
     for(int i=0; i<2; i++) salt[i]=hashedPassword[i];
     salt[2]=0;
+       
+    int i; 
+    do{
+        curentHashedPassword=crypt(curentPassword, salt);
+        //printf("%s %s\n", curentPassword, curentHashedPassword);
+        if (!(strcmp(hashedPassword, curentHashedPassword))){
+            printf("%s\n", curentPassword);
+            return 0;
+        }
     
-    printf("%s\n", salt);
-    for (int i=0; i<123; i++){
-    if(i==1) i=65;
-    if(i==91) i=97;
-    curentPassword[3]=i;
-    for (int y=0; y<123; y++){
-    if(y==1) y=65;
-    if(y==91) y=97;
-    curentPassword[2]=y;
-    for (int k=0; k<123; k++){
-    if(k==1) k=65;
-    if(k==91) k=97;
-    curentPassword[1]=k;
-    for (int j=65; j<123; j++){
-    if(j==91) j=97;
-    curentPassword[0]=j;
-    curentHashedPassword=crypt(curentPassword, salt);
-    printf("%s %s\n", curentPassword, curentHashedPassword);
-   if (!(strcmp(hashedPassword, curentHashedPassword))){
-   printf("%s\n", curentPassword);
-   return 0;
-   }
+        i=0;
+        for(;i<maxPasswordLength;i++){
+            if(nextNumberIncharset[i]>maxNumberOfCharset){
+                curentPassword[i]=charSet[0];
+                nextNumberIncharset[i]=1;
+            }else{ 
+                curentPassword[i]=charSet[nextNumberIncharset[i]];
+                nextNumberIncharset[i]++;
+                break;
+            }
+        }   
+    }while(i<maxPasswordLength);
     
-    }
-    }
-    }
-    }
-   
-   
-    
-   printf("no craked\n");
+printf("no craked\n");
 return 0;
 }

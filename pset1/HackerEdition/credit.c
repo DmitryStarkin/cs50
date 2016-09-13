@@ -9,13 +9,13 @@ return the number of digits in the number
 int NumberLength(long long int number);
 
 /*
-return 1 if length is not in the array VALID_LENGTH
+return 1 if length is not in the array VALID_LENGTH (VALID_LENGTH must end with zero)
 otherwise returns 0
 */
 int LenthInvalid(int length, const int* VALID_LENGTH);
 
 /*
-return 1 if the first digit number is in the array FIRST_DIGITS
+return 1 if the first digits number is in the array FIRST_DIGITS (FIRST_DIGITS must end with zero)
 otherwise returns 0
 */
 int IsFirstDigits(const int* FIRST_DIGITS, long long int number);

@@ -12,8 +12,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    const char* DEFAULT_CHARSET="ASC2AlfabetPrintableSimbol.txt";
-    const char* DEFAULT_DICTIONARY="passwords_dictionary _2026318.txt";
+    const char* DEFAULT_CHARSET="ASC2AlfabetSimbol.txt";
+    const char* DEFAULT_DICTIONARY="passwords_dictionary_2026318.txt";
     int dictionaryAttak=0;
     FILE* csOrDictFile=NULL;
     int maxPasswordLength=4;

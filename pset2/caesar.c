@@ -10,9 +10,9 @@
         return 1;
     }
     int key= atoi(argv[1]);
-    printf("plaintext: ");
+    //printf("plaintext: ");
     string text = GetString();
-    printf("ciphertext: ");
+    //printf("ciphertext: ");
     for (int i=0, len=strlen(text); i<len; i++) {
         if (isalpha(text[i])){
             if (isupper(text[i])) printf("%c", (((text[i]-64)+key)%26)+64);

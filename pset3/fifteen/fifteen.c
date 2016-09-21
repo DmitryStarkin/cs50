@@ -157,11 +157,13 @@ void greet(void)
 void init(void)
 {
     // TODO
-    board[d-1][d-1] = 95;
-    for (int i=0, capacity=d*d-1; i<capacity; i++){
-    
-        board[i/d][i-d*(i/d)]=capacity-i;
-       //board[i/d][i-d*(i/d)]=i+1;
+ 
+    for (int i=0, capacity=d*d; i<capacity; i++){
+        board[i/d][i-d*(i/d)]=capacity-i-1;
+        if(!(d%2)) {
+            board[d-1][d-2]=2;
+            board[d-1][d-3]=1;
+        } 
          
     }
     
@@ -174,15 +176,12 @@ void draw(void)
 {
     // TODO
     
-    for (int i = 0; i < d; i++)
-        {
-            for (int j = 0; j < d; j++)
-            {
-                if (board[i][j]!=95)
-                {
+    for (int i = 0; i < d; i++){
+            for (int j = 0; j < d; j++){
+                if (board[i][j]!=0){
                     printf(" %2d", board[i][j]);
                 }else{
-                    printf(" %2C", (char) board[i][j]);
+                    printf(" %2c", 95);
                 }
             }
             printf("\n");
@@ -202,32 +201,25 @@ bool move(int tile)
     int capacity=d*d;
     if (tile<1 || tile>capacity) return false;
     for (int i=0; i<capacity; i++){
-    line=i/d;
-    column=i-d*(i/d);
+        line=i/d;
+        column=i-d*(i/d);
         if (board[line][column]==tile) break;
     }
     
     for (int yCurentPosition=line-1, yEndPosition=line+1; yCurentPosition<=yEndPosition; yCurentPosition++){
-    if(yCurentPosition>=0 && yCurentPosition<d){
-    for (int xCurentPosition=column-1, xEndPosition=column+1; xCurentPosition<=xEndPosition; xCurentPosition++){
-    if(xCurentPosition>=0 && xCurentPosition<d){
-    if (board [yCurentPosition][xCurentPosition]==95 && (xCurentPosition==column || yCurentPosition==line)){
-    board [yCurentPosition][xCurentPosition]=tile;
-    board[line][column]=95;
-    return true;
+        if(yCurentPosition>=0 && yCurentPosition<d){
+            for (int xCurentPosition=column-1, xEndPosition=column+1; xCurentPosition<=xEndPosition; xCurentPosition++){
+                if(xCurentPosition>=0 && xCurentPosition<d){
+                    if (board [yCurentPosition][xCurentPosition]==0 && (xCurentPosition==column || yCurentPosition==line)){
+                        board [yCurentPosition][xCurentPosition]=tile;
+                        board[line][column]=0;
+                        return true;
+                    }
+                }  
+            }  
+        } 
     }
-    
-    }
-    
-    }
-    
-    }
-    
-    
-    
-    }
-    
-    
+          
     return false;
 }
 

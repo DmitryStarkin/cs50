@@ -18,9 +18,9 @@ int main(int argc, string argv[]) {
             return 1;
         }
     }
- 
+    printf("plaintext: ");
     string text = GetString();
-    
+    printf("ciphertext: ");
     for (int i=0, counter=0, key, len=strlen(text); i<len; i++) {
         if (isalpha(text[i])){
             if (counter==strlen(keyword)) counter=0;

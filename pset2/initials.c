@@ -4,14 +4,14 @@
 #include<cs50.h>
 
 int main(void) {
-    int FirstLeterFlag=1;
+    int firstLeterFlag=1;
     string name = GetString();
     
     for (int i=0, len=strlen(name); i<len; i++) {
-        if (isalpha(name[i]) && FirstLeterFlag) {
+        if (isalpha(name[i]) && firstLeterFlag) {
             printf("%c", toupper(name[i]));
-            FirstLeterFlag=0;
-    } else if (isblank(name[i]) && !FirstLeterFlag) FirstLeterFlag=1;   
+            firstLeterFlag=0;
+    } else if (isblank(name[i]) && !firstLeterFlag) firstLeterFlag=1;   
 }
     printf("\n");
 }

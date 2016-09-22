@@ -6,24 +6,24 @@
 /*
 return the number of digits in the number
 */
-int NumberLength(long long int number);
+int numberLength(long long int number);
 
 /*
 return 1 if length is not in the array VALID_LENGTH (VALID_LENGTH must end with zero)
 otherwise returns 0
 */
-int LenthInvalid(int length, const int* VALID_LENGTH);
+int lenthInvalid(int length, const int* VALID_LENGTH);
 
 /*
 return 1 if the first digits number is in the array FIRST_DIGITS (FIRST_DIGITS must end with zero)
 otherwise returns 0
 */
-int IsFirstDigits(const int* FIRST_DIGITS, long long int number);
+int isFirstDigits(const int* FIRST_DIGITS, long long int number);
 
 /*
 return a number checksum computed by the algorithm Hans Peter Luhn
 */
-int LuhnControlSum(long long int number);
+int luhnControlSum(long long int number);
 
 int main(void)
 { 
@@ -39,37 +39,37 @@ int main(void)
         cardNumber = GetLongLong();
     } while(cardNumber<0);
      
-    if(LenthInvalid(NumberLength(cardNumber), VALID_LENGTH)){
-       printf("INVALID length\n");
+    if(lenthInvalid(numberLength(cardNumber), VALID_LENGTH)){
+       printf("INVALID\n");
        return 0;
     }
         
-    if (LuhnControlSum(cardNumber)%10){
-        printf("INVALID control sum\n");
+    if (luhnControlSum(cardNumber)%10){
+        printf("INVALID\n");
         return 0;
     }
       
-    if (IsFirstDigits(AMEX_FIRST_DIGITS, cardNumber)){
+    if (isFirstDigits(AMEX_FIRST_DIGITS, cardNumber)){
         printf("AMEX\n");
         return 0;
     } 
     
-    if (IsFirstDigits(MASTERCARD_FIRST_DIGITS, cardNumber)){
+    if (isFirstDigits(MASTERCARD_FIRST_DIGITS, cardNumber)){
         printf("MASTERCARD\n");
         return 0;
     } 
     
-    if (IsFirstDigits(VISA_FIRST_DIGITS, cardNumber)){
+    if (isFirstDigits(VISA_FIRST_DIGITS, cardNumber)){
         printf("VISA\n");
         return 0;
     } 
     
        
-    printf("INVALID, card is not supported\n");    
+    printf("INVALID\n");    
     return 0;
 }
 
-int NumberLength(long long int number){
+int numberLength(long long int number){
 int length=0;
 
     if(!number) return 1;
@@ -81,7 +81,7 @@ int length=0;
 return length;
 }
 
-int LenthInvalid(int length, const int* VALID_LENGTH){
+int lenthInvalid(int length, const int* VALID_LENGTH){
     for (int i=0; length-VALID_LENGTH[i];i++){
         if(!VALID_LENGTH[i]) return 1;
     }
@@ -89,26 +89,26 @@ int LenthInvalid(int length, const int* VALID_LENGTH){
 return 0;
 }
 
-int IsFirstDigits(const int* FIRST_DIGITS, long long int number){
+int isFirstDigits(const int* FIRST_DIGITS, long long int number){
 int firstDigitslength;
-int numberLength;
+int cardNumberLength;
 long long int remove;
 
-    numberLength=NumberLength(number);
+    cardNumberLength=numberLength(number);
     while (*FIRST_DIGITS){
         remove=1;
-        firstDigitslength=NumberLength(*FIRST_DIGITS);
-        for (int i=0, y=numberLength-firstDigitslength; i<y; i++){
+        firstDigitslength=numberLength(*FIRST_DIGITS);
+        for (int i=0, y=cardNumberLength-firstDigitslength; i<y; i++){
         remove*=10; 
         }
-        if (*FIRST_DIGITS-(number/remove))FIRST_DIGITS++;
+        if (*FIRST_DIGITS-(number/remove)) FIRST_DIGITS++;
         else return 1;
     }
     
 return 0;
 }
 
-int LuhnControlSum(long long int number){
+int luhnControlSum(long long int number){
 int controlSum=0;
 int curentDighit=0;
 int dighitCounter=1;

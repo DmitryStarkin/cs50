@@ -3,12 +3,12 @@
 
 int main(void){
 
-  const int BottlesPerMin = 12;
+  const int BOTTLES_PER_MIN = 12;
   int minutes=0;
    
   printf("minutes:");
   minutes = GetInt();
-  printf("bottles: %d\n", BottlesPerMin*minutes);
+  printf("bottles: %d\n", BOTTLES_PER_MIN*minutes);
   
   return 0;
 }

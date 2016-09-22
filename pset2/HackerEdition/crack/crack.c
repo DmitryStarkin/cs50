@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
     //arrays for password to compare     
     char curentPassword[maxPasswordLength+1];
     //variable for read from file
-    char simbol;
+    unsigned char simbol;
     //curentPassword initialization
     for(int i=0; i<=maxPasswordLength; i++) curentPassword[i]=0;
          

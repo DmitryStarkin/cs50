@@ -26,7 +26,7 @@ int main(int argc, string argv[]) {
             if (counter==strlen(keyword)) counter=0;
             if (isupper(keyword[counter])) key=(int) keyword[counter]-65;
             else key=(int) keyword[counter]-97;
-            if (isupper(text[i]))printf("%c", (((text[i]-64)+key)%26)+64);
+            if (isupper(text[i])) printf("%c", (((text[i]-64)+key)%26)+64);
             else printf("%c", (((text[i]-96)+key)%26)+96);
             counter++;
         }else printf("%c", text[i]);

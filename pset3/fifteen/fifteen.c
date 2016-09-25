@@ -176,7 +176,7 @@ void draw(void)
     
     for (int i = 0; i < d; i++){
             for (int j = 0; j < d; j++){
-                if (board[i][j]!=0) printf(" %2d", board[i][j]);
+                if (board[i][j]) printf(" %2d", board[i][j]);
                 else printf(" %2c", '_');    
             }
             printf("\n");
@@ -213,8 +213,7 @@ bool move(int tile)
                 }  
             }  
         } 
-    }
-          
+    }       
     return false;
 }
 
@@ -228,7 +227,6 @@ bool won(void)
     
     for (int i=0, capacity=d*d-1; i<capacity; i++){
         if (board[i/d][i-d*(i/d)]!=(i+1)) return false;
-    }
-    
+    }    
     return true;
 }

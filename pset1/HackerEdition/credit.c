@@ -72,7 +72,9 @@ int main(void)
 int numberLength(long long int number){
 int length=0;
 
-    if(!number) return 1;
+    if(!number){ 
+        return 1;
+    }
     while(number){
         number/=10;
         length++;
@@ -83,7 +85,9 @@ return length;
 
 int lenthInvalid(int length, const int* VALID_LENGTH){
     for (int i=0; length-VALID_LENGTH[i];i++){
-        if(!VALID_LENGTH[i]) return 1;
+        if(!VALID_LENGTH[i]) {
+            return 1;
+        }
     }
     
 return 0;
@@ -99,10 +103,14 @@ long long int remove;
         remove=1;
         firstDigitslength=numberLength(*FIRST_DIGITS);
         for (int i=0, y=cardNumberLength-firstDigitslength; i<y; i++){
-        remove*=10; 
+            remove*=10; 
         }
-        if (*FIRST_DIGITS-(number/remove)) FIRST_DIGITS++;
-        else return 1;
+        if (*FIRST_DIGITS-(number/remove)){ 
+            FIRST_DIGITS++;
+        }
+        else {
+            return 1;
+        }
     }
     
 return 0;
@@ -116,8 +124,12 @@ int dighitCounter=1;
     while(number){
         curentDighit=number%10;
         if (dighitCounter%2)controlSum+=curentDighit;
-            else if (curentDighit*2>9) controlSum+=curentDighit*2-9;
-                    else controlSum+=curentDighit*2; 
+            else if {
+                (curentDighit*2>9) controlSum+=curentDighit*2-9;
+            }
+                else {
+                    controlSum+=curentDighit*2;
+                } 
         number/=10;
         dighitCounter++;  
     }

@@ -33,8 +33,12 @@ void sort(int values[], int n){
     int minValue, maxValue;
     minValue = maxValue = values[0];
     for (int i=0; i<n; i++){
-        if (values[i]<minValue) minValue = values[i];
-        if (values[i]>maxValue) maxValue = values[i];
+        if (values[i]<minValue){ 
+            minValue = values[i];
+        }
+        if (values[i]>maxValue) {
+            maxValue = values[i];
+        }
     }
     int count[maxValue-minValue+1];
     for (int i=0, len=maxValue-minValue+1; i<len; i++){

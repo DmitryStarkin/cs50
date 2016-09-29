@@ -11,7 +11,9 @@ int main(void) {
         if (isalpha(name[i]) && firstLeterFlag) {
             printf("%c", toupper(name[i]));
             firstLeterFlag=0;
-    } else if (isblank(name[i]) && !firstLeterFlag) firstLeterFlag=1;   
+        } else if (isblank(name[i]) && !firstLeterFlag) {
+            firstLeterFlag=1;
+          }   
 }
     printf("\n");
 }

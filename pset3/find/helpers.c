@@ -17,9 +17,15 @@ bool search(int value, int values[], int n){
    int key=n/2;
         do { 
             n=n/2;
-            if (values[key] == value) return true;
-            if (values[key] > value) key=key-n/2-1;
-            else key=key+(n+1)/2;
+            if (values[key] == value){
+                return true;
+            }
+            if (values[key] > value){
+                key=key-n/2-1;
+            }
+            else{ 
+                key=key+(n+1)/2;
+            }
         } while(n);  
    return false;
 }

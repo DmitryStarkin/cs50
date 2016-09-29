@@ -71,10 +71,14 @@ int main(int argc, char* argv[]) {
     //variable for read from file
     unsigned char simbol;
     //curentPassword initialization
-    for(int i=0; i<=maxPasswordLength; i++) curentPassword[i]=0;
+    for(int i=0; i<=maxPasswordLength; i++) {
+        curentPassword[i]=0;
+    }
          
     //extract salt from hashedPassword
-    for(int i=0; i<2; i++) salt[i]=hashedPassword[i];
+    for(int i=0; i<2; i++){ 
+        salt[i]=hashedPassword[i];
+    }
     salt[2]=0;
    
     if(dictionaryAttak){
@@ -114,13 +118,15 @@ int main(int argc, char* argv[]) {
         //charset array
         char charSet[128];
         //charset array initialization
-        for(int i=0; i<128; i++) charSet[i]=0;
+        for(int i=0; i<128; i++){
+            charSet[i]=0;
+         }
         // read simbols from file (!! file mast have UNIX end Line) and write in charset array 
         for(int i=0;  fread(&simbol, 1, 1, csOrDictFile);){
             //not read more 127 simbols
             if (simbol!=0x0a && i<128) {
-            charSet[i]=simbol;
-            i++;
+                charSet[i]=simbol;
+                i++;
             }       
         }     
         fclose(csOrDictFile);
@@ -128,7 +134,9 @@ int main(int argc, char* argv[]) {
         //arrays for number curent simbols from charset in password
         int nextNumberIncharset[maxPasswordLength+1];
         //nextNumberIncharset initialization
-        for(int i=0; i<=maxPasswordLength; i++) nextNumberIncharset[i]=0;
+        for(int i=0; i<=maxPasswordLength; i++) {
+            nextNumberIncharset[i]=0;
+        }
     
         //set first password to compare  
         curentPassword[0]=charSet[0];

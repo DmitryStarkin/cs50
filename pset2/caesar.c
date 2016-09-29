@@ -15,9 +15,15 @@ int main(int argc, string argv[]) {
     printf("ciphertext: ");
     for (int i=0, len=strlen(text); i<len; i++) {
         if (isalpha(text[i])){
-            if (isupper(text[i])) printf("%c", (((text[i]-64)+key)%26)+64);
-            else printf("%c", (((text[i]-96)+key)%26)+96);
-        }else printf("%c", text[i]);
+            if (isupper(text[i])){ 
+                printf("%c", (((text[i]-64)+key)%26)+64);
+            }
+            else {
+                printf("%c", (((text[i]-96)+key)%26)+96);
+            }
+        }else {
+            printf("%c", text[i]);
+        }
     }
     printf("\n");
 return 0;

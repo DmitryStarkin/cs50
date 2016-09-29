@@ -39,7 +39,9 @@ int main(int argc, char* argv[])
     // read input file 
     while (true) {
         fread(buffer, 512, 1, inputFile);
-        if (feof(inputFile)) break;
+        if (feof(inputFile)){ 
+            break;
+        }
         if ((buffer[0] == 0xff) && (buffer[1] == 0xd8) && (buffer[2] == 0xff)) {
             
             //if there is

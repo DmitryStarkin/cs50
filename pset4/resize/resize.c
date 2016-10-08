@@ -25,12 +25,12 @@ int main(int argc, char* argv[])
     char* infile = argv[2];
     char* outfile = argv[3];
     
-    if (sscanf(argv[1], " %i %c", &scale, &trach) != 1){
-        printf("Usage: ./resize scale(integer<100) infile outfile\n");
+    if (sscanf(argv[1], " %i %c", &scale, &trach) != 1) {
+        fprintf(stderr, "Usage: ./resize scale(integer<100) infile outfile\n");
         return 1;
     }
-    if (scale<1 | scale>100) {
-        printf("Usage: ./resize scale(integer<100) infile outfile\n");
+    if (scale < 1 | scale > 100) {
+        fprintf(stderr, "Usage: ./resize scale(integer<100) infile outfile\n");
         return 1;   
     }
         
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     FILE* inptr = fopen(infile, "r");
     if (inptr == NULL)
     {
-        printf("Could not open %s.\n", infile);
+        fprintf(stderr,"Could not open %s.\n", infile);
         return 2;
     }
 

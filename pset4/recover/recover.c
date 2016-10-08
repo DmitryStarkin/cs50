@@ -21,15 +21,15 @@ int main(int argc, char* argv[])
     char curentFileName[8]; 
          
     // ensure proper usage
-    if (argc != 2){
-        printf("Usage: ./recover image\n");
+    if (argc != 2) {
+        fprintf(stderr, "Usage: ./recover image\n");
         return 1;
     }
     
     // open input file 
     FILE* inputFile = fopen(argv[1], "rb");
-    if (inputFile == NULL){
-        printf("Could not open %s.\n", argv[1]);
+    if (inputFile == NULL) {
+        fprintf(stderr, "Could not open %s.\n", argv[1]);
         return 2;
     }
     

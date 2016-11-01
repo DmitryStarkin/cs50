@@ -26,7 +26,8 @@ def search():
     # TODO
     positive, negative, neutral = 0.0, 0.0, 0.0
     for tweet in tweets:
-        if analyzer.analyze(tweet) > 0.0:
+        score = analyzer.analyze(tweet)
+        if  score > 0.0:
             positive += 1     
         elif score < 0.0:
             negative += 1

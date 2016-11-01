@@ -3,16 +3,21 @@
 # TODO
 import sys
 import helpers
+import re
 from analyzer import Analyzer
 from termcolor import colored
 
 def main():
     # ensure proper usage
     if len(sys.argv) != 2:
-        sys.exit("Usage: ./smile screen_name")
+        sys.exit("Usage: ./smile @screen_name")
+    elif not (re.match('@', sys.argv[1])):
+        sys.exit("Usage: ./smile @screen_name")
 
     # get screen_name's tweets
-    tweets = helpers.get_user_timeline(sys.argv[1], 50)
+    tweets = helpers.get_user_timeline(re.sub(r'@?','',sys.argv[1]), 50)
+    if tweets == None:
+        sys.exit("it is impossible to tweets")
     
     # instantiate analyzer
     analyzer = Analyzer()

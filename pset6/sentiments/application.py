@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, url_for
-
+import re
 import helpers
 from analyzer import Analyzer
 
@@ -18,7 +18,10 @@ def search():
         return redirect(url_for("index"))
 
     # get screen_name's tweets
-    tweets = helpers.get_user_timeline(screen_name, 100)
+    tweets = helpers.get_user_timeline(re.sub(r'@?','',screen_name), 100)
+    
+    if tweets == None:
+        return redirect(url_for("index"))
     
     # instantiate analyzer
     analyzer = Analyzer()

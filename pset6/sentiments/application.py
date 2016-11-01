@@ -16,9 +16,11 @@ def search():
     screen_name = request.args.get("screen_name")
     if not screen_name:
         return redirect(url_for("index"))
+    
+    screen_name = re.sub(r'@?','',screen_name)
 
     # get screen_name's tweets
-    tweets = helpers.get_user_timeline(re.sub(r'@?','',screen_name), 100)
+    tweets = helpers.get_user_timeline(screen_name, 100)
     
     if tweets == None:
         return redirect(url_for("index"))

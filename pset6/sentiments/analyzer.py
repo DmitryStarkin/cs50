@@ -1,5 +1,4 @@
-# encoding: utf8
-import nltk
+import _thread as thread
 import re
 from string import punctuation
 
@@ -8,22 +7,27 @@ class Analyzer():
     posword = []
     negword = []
     regex = re.compile('[%s]' % re.escape(punctuation))
+    exitmutexes = [thread.allocate_lock() for i in range(2)]
+
+    
+    def loadDic (self, myId, filename, listName):
+        for line in open(filename):
+                if (";" not in line) and line.strip():
+                    line = line.replace("\n", "")
+                    listName.append(line)
+        self.exitmutexes[myId].acquire()
+    
+     
 
     def __init__(self, positives="positive-words.txt", negatives="negative-words.txt"):
         """Initialize Analyzer."""
 
         # TODO
-        for line in open(negatives):
-            if (";" not in line) and line.strip():
-                line = line.replace("\n", "")
-                self.negword.append(line)
-               
-        for line in open(positives):
-            if (";" not in line) and line.strip():
-               line = line.replace("\n", "")
-               self.posword.append(line)
-           
-         
+        thread.start_new_thread(self.loadDic, (0, positives, self.posword))
+        thread.start_new_thread(self.loadDic, (1, negatives, self.negword))
+        
+        for mutex in self.exitmutexes:
+            while not mutex.locked(): pass     
 
     def analyze(self, text):
         """Analyze text for sentiment, returning its score."""

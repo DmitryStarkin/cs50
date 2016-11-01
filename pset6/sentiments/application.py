@@ -19,10 +19,25 @@ def search():
 
     # get screen_name's tweets
     tweets = helpers.get_user_timeline(screen_name)
-
+    
+    # instantiate analyzer
+    analyzer = Analyzer()
+    
     # TODO
-    positive, negative, neutral = 0.0, 0.0, 100.0
-
+    positive, negative, neutral = 0.0, 0.0, 0.0
+    for tweet in tweets:
+        if analyzer.analyze(tweet) > 0.0:
+            positive += 1     
+        elif score < 0.0:
+            negative += 1
+        else:
+            neutral += 1
+        
+    allTweets = positive + negative + neutral
+    positive = (positive/allTweets) * 100
+    negative = (negative/allTweets) * 100
+    neutral = 100 - positive - negative
+     
     # generate chart
     chart = helpers.chart(positive, negative, neutral)
 

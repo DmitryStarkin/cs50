@@ -18,7 +18,7 @@ def search():
         return redirect(url_for("index"))
 
     # get screen_name's tweets
-    tweets = helpers.get_user_timeline(screen_name)
+    tweets = helpers.get_user_timeline(screen_name, 100)
     
     # instantiate analyzer
     analyzer = Analyzer()

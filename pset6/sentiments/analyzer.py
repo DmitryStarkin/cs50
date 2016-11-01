@@ -17,8 +17,6 @@ class Analyzer():
                     listName.append(line)
         self.exitmutexes[myId].acquire()
     
-     
-
     def __init__(self, positives="positive-words.txt", negatives="negative-words.txt"):
         """Initialize Analyzer."""
 

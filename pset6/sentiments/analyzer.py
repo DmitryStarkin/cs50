@@ -1,3 +1,4 @@
+# encoding: utf8
 import nltk
 import re
 from string import punctuation
@@ -12,7 +13,7 @@ class Analyzer():
         """Initialize Analyzer."""
 
         # TODO
-        for line in open(negatives).readline():
+        for line in open(negatives):
             if (";" not in line) and line.strip():
                 line = line.replace("\n", "")
                 self.negword.append(line)
@@ -28,7 +29,7 @@ class Analyzer():
         """Analyze text for sentiment, returning its score."""
 
         # TODO
-        score = 0
+        score = 0.0
         words = []
         
         oneline = text.replace('\n', ' ')        
@@ -37,7 +38,7 @@ class Analyzer():
         
         for word in uncasedWords:
             words.append(word.strip().lower())
-               
+         
         for word in words:
             if (word in self.posword):
                 score += 1

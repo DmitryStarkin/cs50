@@ -16,7 +16,7 @@ def main():
 
     # get screen_name's tweets
     tweets = helpers.get_user_timeline(re.sub(r'@?','',sys.argv[1]), 50)
-    if tweets == None:
+    if tweets is None:
         sys.exit("it is impossible to tweets")
     
     # instantiate analyzer

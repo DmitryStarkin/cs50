@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    index
+{% endblock %}
+
+{% block main %}
+<table class="table table-striped">
+    <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>TOTAL</th>
+            </tr>
+    </thead>
+    <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td> {{usd('total')}} </td>
+            </tr>
+    </tfoot>
+    <tbody>
+            {% for %}
+            <tr>
+                <td colspan="4">CASH</td>
+                <td>$10,000.00</td>
+            </tr>
+            {% end for %}
+            <tr>
+                <td colspan="4">CASH</td>
+                <td>{{usd('cash')}}</td>
+            </tr>
+    </tbody>
+</table>
+{% endblock %}

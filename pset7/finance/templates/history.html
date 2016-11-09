@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    hisyory
+{% endblock %}
+
+{% block main %}
+<table class="table table-striped">
+    <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Shares</th>
+                <th>Transactin type</th>
+                <th>Price</th>
+                <th>Transacted</th>
+            </tr>
+    </thead>
+    <tbody>
+            {% for line in history %}
+            <tr>
+                <th>{{line['symbol']}}</th>
+                <th>{{line['shares']}}</th>
+                {% if line['type_trans'] < 0 %}
+                    <th>sold</th>
+                {% else %}
+                    <th>buy</th>
+                {% endif %}
+                <th>{{line['price'] | usd}}</th>
+                <th>{{line['date']}}</th>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

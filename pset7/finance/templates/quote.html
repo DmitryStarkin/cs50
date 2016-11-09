@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    sell
+    quote
 {% endblock %}
 
 {% block main %}
-    <form action="{{ url_for('sell') }}" method="post">
+    <form action="{{ url_for('quote') }}" method="post">
         <fieldset>
             <div class="form-group">
                 <input list="values" autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text"/>
@@ -16,10 +16,7 @@
                 </datalist>
             </div>
             <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="Shares" type="text"/>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-default" type="submit">Sell</button>
+                <button class="btn btn-default" type="submit">Quote</button>
             </div>
         </fieldset>
     </form>

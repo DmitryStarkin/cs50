@@ -18,19 +18,22 @@
     <tfoot>
             <tr>
                 <td colspan="4"></td>
-                <td> {{usd('total')}} </td>
+                <td> {{total | usd}} </td>
             </tr>
     </tfoot>
     <tbody>
-            {% for %}
+            {% for symbol in symbols %}
             <tr>
-                <td colspan="4">CASH</td>
-                <td>$10,000.00</td>
+                <th>{{symbol['symbol']}}</th>
+                <th>{{symbol['name']}}</th>
+                <th>{{symbol['sum_shares']}}</th>
+                <th>{{symbol['price'] | usd}}</th>
+                <th>{{(symbol['total']) |usd}}</th>
             </tr>
-            {% end for %}
+            {% endfor %}
             <tr>
                 <td colspan="4">CASH</td>
-                <td>{{usd('cash')}}</td>
+                <td>{{ cash | usd}}</td>
             </tr>
     </tbody>
 </table>

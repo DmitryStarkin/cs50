@@ -2,6 +2,7 @@ import os
 import re
 from flask import Flask, jsonify, render_template, request, url_for
 from flask_jsglue import JSGlue
+from random import shuffle, seed
 
 from cs50 import SQL
 from helpers import lookup
@@ -21,38 +22,49 @@ if app.config["DEBUG"]:
 
 # configure CS50 Library to use SQLite database
 db = SQL("sqlite:///mashup.db")
-db.execute ("CREATE VIRTUAL TABLE IF NOT EXISTS vplaces USING fts4 (admin_name1, place_name, postal_code, latitude, longitude, notindexed=latitude, notindexed=longitude, prefix='1,2')")
-db.execute ("INSERT OR REPLACE INTO vplaces (admin_name1, place_name, postal_code, latitude, longitude) SELECT admin_name1, place_name, postal_code, latitude, longitude FROM places")
-db.execute ("INSERT INTO vplaces(vplaces) VALUES('optimize')")
 
 @app.route("/")
 def index():
     """Render map."""
+    
     if not os.environ.get("API_KEY"):
         raise RuntimeError("API_KEY not set")
+        
     return render_template("index.html", key=os.environ.get("API_KEY"))
-    #return render_template("index.html", key="AIzaSyB9Mn_NjxU4TKtaiXKBkCuskj7moU9CeRs")
     
 @app.route("/articles")
 def articles():
     """Look up articles for geo."""
 
-    # TODO
-    return jsonify([])
+    # validate parameters
+    if not request.args.get("geo"):
+        raise RuntimeError("missing geo")
+        
+    data = lookup(request.args.get("geo"))
+    
+    if len(data) > 5:
+        
+        #choose five random news
+        seed()
+        shuffle(data)
+        data = data[:5]
+    
+    return jsonify(data)
 
 @app.route("/search")
 def search():
     """Search for places that match query."""
 
-    # TODO
-    #if not request.args.get("q"):
-        #raise RuntimeError("missing q")
+    # validate parameters
+    if not request.args.get("q"):
+        raise RuntimeError("missing q")
+        
     line = request.args.get("q")
-    #line = "A"  
-    #rows = db.execute("SELECT admin_name1, place_name, postal_code, latitude, longitude FROM places WHERE admin_name1 LIKE :line OR place_name LIKE :line OR postal_code LIKE :line", line = '%' + line + '%')
-    rows = db.execute("SELECT admin_name1, place_name, postal_code, latitude, longitude FROM vplaces WHERE vplaces MATCH :line", line = '*' + line + '*')
+    
+    # get data from virtual table using full text searsh
+    rows = db.execute("SELECT admin_name1, place_name, postal_code, latitude, longitude FROM vplaces WHERE vplaces MATCH :line", line = line + '*')
+    
     return jsonify(rows)
-    #return line
     
 @app.route("/update")
 def update():

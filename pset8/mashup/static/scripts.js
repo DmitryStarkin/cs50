@@ -51,7 +51,7 @@ $(function() {
         styles: styles,
         zoom: 13,
         zoomControl: true,
-        mapTypeControl:true
+        mapTypeControl: true
     };
 
     // get DOM node in which map will be instantiated
@@ -87,20 +87,40 @@ function addMarker(place) {
         //show spinner 
         showInfo(marker);
 
-        //get data    
-        $.getJSON(Flask.url_for("articles"), {
+        var parameters;
+
+        if (place.country_code == null) {
+            parameters = {
+                geo: place.place_name,
+                lang: "ru_ua"
+            };
+        }
+        else if (place.country_code == "US") {
+            parameters = {
                 geo: place.postal_code
-            })
+            };
+        }
+        else {
+            parameters = {
+                geo: place.place_name,
+                lang: place.country_code
+            };
+        }
+
+        //get data    
+        $.getJSON(Flask.url_for("articles"), parameters)
             .done(function(data, textStatus, jqXHR) {
                 if (data.length == 0) {
                     showInfo(marker, "No news");
                 }
-                content = "";
-                for (var i = 0; i < data.length; i++) {
-                    content += "<li><a href=" + data[i]["link"] + " target=\"_blank\">" + data[i]["title"] + "</a></li>"
+                else {
+                    content = "";
+                    for (var i = 0; i < data.length; i++) {
+                        content += "<li><a href=" + data[i]["link"] + " target=\"_blank\">" + data[i]["title"] + "</a></li>"
+                    }
+                    content = "<ul>" + content + "</ul>"
+                    showInfo(marker, content);
                 }
-                content = "<ul>" + content + "</ul>"
-                showInfo(marker, content);
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
 
@@ -273,7 +293,7 @@ function update() {
         sw: sw.lat() + "," + sw.lng(),
         centr: centr.lat() + "," + centr.lng()
     };
-    
+
     $.getJSON(Flask.url_for("update"), parameters)
         .done(function(data, textStatus, jqXHR) {
 

@@ -40,7 +40,10 @@ def articles():
     if not request.args.get("geo"):
         raise RuntimeError("missing geo")
         
-    data = lookup(request.args.get("geo"))
+    if not request.args.get("lang"):
+        data = lookup(request.args.get("geo"))
+    else:    
+        data = lookup(request.args.get("geo"), request.args.get("lang"))
     
     if len(data) > 5:
         

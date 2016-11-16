@@ -75,39 +75,58 @@ def update():
         raise RuntimeError("missing sw")
     if not request.args.get("ne"):
         raise RuntimeError("missing ne")
+    if not request.args.get("centr"):
+        raise RuntimeError("missing centr")   
 
     # ensure parameters are in lat,lng format
     if not re.search("^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$", request.args.get("sw")):
         raise RuntimeError("invalid sw")
     if not re.search("^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$", request.args.get("ne")):
         raise RuntimeError("invalid ne")
+    if not re.search("^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$", request.args.get("centr")):
+        raise RuntimeError("invalid centr")    
 
     # explode southwest corner into two variables
     (sw_lat, sw_lng) = [float(s) for s in request.args.get("sw").split(",")]
 
     # explode northeast corner into two variables
     (ne_lat, ne_lng) = [float(s) for s in request.args.get("ne").split(",")]
+    
+    # explode centr into two variables
+    (centr_lat, centr_lng) = [float(s) for s in request.args.get("centr").split(",")]
+    
+    centr_rows = db.execute("""SELECT * FROM places
+            WHERE ((:centr_lat - 0.001 < latitude) AND (:centr_lat + 0.001 > latitude)) AND ((:centr_lng - 0.001 < longitude) AND (:centr_lng + 0.001 > longitude))
+            GROUP BY country_code, place_name, admin_code1""",
+            centr_lat=centr_lat, centr_lng=centr_lng)
+    
+    if not len(centr_rows):
+        centr_rows = [{"postal_code":""}]
 
     # find 10 cities within view, pseudorandomly chosen if more within view
     if (sw_lng <= ne_lng):
 
         # doesn't cross the antimeridian
         rows = db.execute("""SELECT * FROM places
-            WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude AND longitude <= :ne_lng)
+            WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude AND longitude <= :ne_lng) AND (:index != postal_code) 
             GROUP BY country_code, place_name, admin_code1
             ORDER BY RANDOM()
             LIMIT 10""",
-            sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng)
+            sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng, index=centr_rows[0]["postal_code"])
 
     else:
 
         # crosses the antimeridian
         rows = db.execute("""SELECT * FROM places
-            WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude OR longitude <= :ne_lng)
+            WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude OR longitude <= :ne_lng) AND (:index != postal_code)
             GROUP BY country_code, place_name, admin_code1
             ORDER BY RANDOM()
             LIMIT 10""",
-            sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng)
+            sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng, index=centr_rows[0]["postal_code"])
 
     # output places as JSON
-    return jsonify(rows)
+    #return jsonify(rows + centr_rows)
+    if centr_rows[0]["postal_code"] == "":
+        return jsonify(rows)
+    else:    
+        return jsonify(rows + centr_rows)

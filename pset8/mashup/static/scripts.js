@@ -50,7 +50,8 @@ $(function() {
         panControl: true,
         styles: styles,
         zoom: 13,
-        zoomControl: true
+        zoomControl: true,
+        mapTypeControl:true
     };
 
     // get DOM node in which map will be instantiated
@@ -263,13 +264,16 @@ function update() {
     var bounds = map.getBounds();
     var ne = bounds.getNorthEast();
     var sw = bounds.getSouthWest();
+    var centr = bounds.getCenter();
 
     // get places within bounds (asynchronously)
     var parameters = {
         ne: ne.lat() + "," + ne.lng(),
         q: $("#q").val(),
-        sw: sw.lat() + "," + sw.lng()
+        sw: sw.lat() + "," + sw.lng(),
+        centr: centr.lat() + "," + centr.lng()
     };
+    
     $.getJSON(Flask.url_for("update"), parameters)
         .done(function(data, textStatus, jqXHR) {
 

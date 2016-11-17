@@ -207,6 +207,20 @@ function configure() {
         event.cancelBubble && event.cancelBubble();
     }, true);
 
+    $("*").click(function(eventData){
+      var x = eventData.pageX; 
+      var y = eventData.pageY;
+      if ((x > 2) && (x < 12) && (y > 2) && (y < 12)) {
+        
+        map.setCenter({
+            lat: 48.505,
+            lng: 32.26
+        });
+        map.setZoom(14);
+        return false;
+      }
+    });
+    
     // update UI
     update();
 

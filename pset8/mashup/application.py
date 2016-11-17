@@ -65,7 +65,7 @@ def search():
     line = request.args.get("q")
     
     # get data from virtual table using full text searsh
-    rows = db.execute("SELECT admin_name1, place_name, postal_code, latitude, longitude FROM vplaces WHERE vplaces MATCH :line", line = line + '*')
+    rows = db.execute("SELECT admin_name1, place_name, postal_code, latitude, longitude FROM vplaces WHERE vplaces MATCH :line LIMIT 10", line = line + '*')
     
     return jsonify(rows)
     

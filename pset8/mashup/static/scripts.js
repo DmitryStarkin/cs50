@@ -191,7 +191,7 @@ function configure() {
         });
 
         // update UI
-        update();
+        update(suggestion.latitude, suggestion.longitude);
     });
 
     // hide info window when text box has focus
@@ -207,20 +207,20 @@ function configure() {
         event.cancelBubble && event.cancelBubble();
     }, true);
 
-    $("*").click(function(eventData){
-      var x = eventData.pageX; 
-      var y = eventData.pageY;
-      if ((x > 2) && (x < 32) && (y > 2) && (y < 32)) {
-        
-        map.setCenter({
-            lat: 48.505,
-            lng: 32.26
-        });
-        map.setZoom(14);
-        return false;
-      }
+    $("*").click(function(eventData) {
+        var x = eventData.pageX;
+        var y = eventData.pageY;
+        if ((x > 2) && (x < 32) && (y > 2) && (y < 32)) {
+
+            map.setCenter({
+                lat: 48.505,
+                lng: 32.26
+            });
+            map.setZoom(14);
+            return false;
+        }
     });
-    
+
     // update UI
     update();
 
@@ -297,19 +297,26 @@ function showInfo(marker, content) {
 /**
  * Updates UI's markers.
  */
-function update() {
+function update(cLat, cLng) {
+
     // get map's bounds
     var bounds = map.getBounds();
     var ne = bounds.getNorthEast();
     var sw = bounds.getSouthWest();
-    var centr = bounds.getCenter();
+
+    //check parameters
+    if ((cLat === undefined) || (cLng === undefined)) {
+        var centr = bounds.getCenter();
+        cLat = centr.lat();
+        cLng = centr.lng()
+    }
 
     // get places within bounds (asynchronously)
     var parameters = {
         ne: ne.lat() + "," + ne.lng(),
         q: $("#q").val(),
         sw: sw.lat() + "," + sw.lng(),
-        centr: centr.lat() + "," + centr.lng()
+        centr: cLat + "," + cLng
     };
 
     $.getJSON(Flask.url_for("update"), parameters)

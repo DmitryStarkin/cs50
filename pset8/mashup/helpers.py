@@ -17,6 +17,11 @@ def lookup(geo, lang="us"):
             del lookup.cache[geo]
             del lookup.query_counter[geo]
             
+    if geo == "H++":
+        lookup.cache[geo] = {"link": "http://programming.kr.ua/ru", "title": "Главная"}, {"link": "http://programming.kr.ua/ru/news", "title": "News"}, {"link": "http://programming.kr.ua/ru/potential", "title": "Возможности"}, {"link": "http://programming.kr.ua/ru/about#contacts", "title": "Контакты"}
+        lookup.query_counter[geo] = 1
+        return lookup.cache[geo]
+        
     url = "http://news.google.com/news?ned=" + lang+ "&geo={}&output=rss"
     
     # get feed from Google

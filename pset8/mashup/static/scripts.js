@@ -9,6 +9,7 @@ var info = new google.maps.InfoWindow();
 
 //marker image
 var MARKER_IMG = "/static/marker.png";
+var H_IMG = "/static/h.png";
 
 // execute when the DOM is fully loaded
 $(function() {
@@ -74,6 +75,15 @@ $(function() {
  */
 function addMarker(place) {
     // TODO
+
+    var markerImage;
+    if (place.place_name == "H++") {
+        markerImage = H_IMG
+    }
+    else {
+        markerImage = MARKER_IMG
+    }
+
     var marker = new google.maps.Marker({
         position: {
             lat: place.latitude,
@@ -82,7 +92,7 @@ function addMarker(place) {
         label: place.place_name + ", " + place.admin_name1,
         icon: {
             labelOrigin: new google.maps.Point(16, 40),
-            url: MARKER_IMG
+            url: markerImage
         }
     });
 
@@ -118,7 +128,7 @@ function addMarker(place) {
                     showInfo(marker, "No news");
                 }
                 else {
-                    content = "";
+                    var content = "";
                     for (var i = 0; i < data.length; i++) {
                         content += "<li><a href=" + data[i]["link"] + " target=\"_blank\">" + data[i]["title"] + "</a></li>"
                     }

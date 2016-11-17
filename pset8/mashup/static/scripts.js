@@ -128,7 +128,7 @@ function addMarker(place) {
                     showInfo(marker, "No news");
                 }
                 else {
-                    var content = "";
+                    content = "";
                     for (var i = 0; i < data.length; i++) {
                         content += "<li><a href=" + data[i]["link"] + " target=\"_blank\">" + data[i]["title"] + "</a></li>"
                     }

@@ -111,7 +111,7 @@ def update():
 
         # doesn't cross the antimeridian
         rows = db.execute("""SELECT * FROM places
-            WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude AND longitude <= :ne_lng) AND (:index != postal_code) 
+            WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude AND longitude <= :ne_lng) AND (:index != postal_code) AND ( place_name != 'H++') 
             GROUP BY country_code, place_name, admin_code1
             ORDER BY RANDOM()
             LIMIT 10""",
@@ -121,7 +121,7 @@ def update():
 
         # crosses the antimeridian
         rows = db.execute("""SELECT * FROM places
-            WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude OR longitude <= :ne_lng) AND (:index != postal_code)
+            WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude OR longitude <= :ne_lng) AND (:index != postal_code) AND ( place_name != 'H++')
             GROUP BY country_code, place_name, admin_code1
             ORDER BY RANDOM()
             LIMIT 10""",

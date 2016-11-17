@@ -210,7 +210,7 @@ function configure() {
     $("*").click(function(eventData){
       var x = eventData.pageX; 
       var y = eventData.pageY;
-      if ((x > 2) && (x < 12) && (y > 2) && (y < 12)) {
+      if ((x > 2) && (x < 32) && (y > 2) && (y < 32)) {
         
         map.setCenter({
             lat: 48.505,

@@ -11,6 +11,7 @@ def lookup(geo, lang="us"):
     # check cache for geo
     if geo in lookup.cache:
         if lookup.query_counter[geo] < 10:
+            lookup.query_counter[geo] += 1
             return lookup.cache[geo]
         else:
             del lookup.cache[geo]

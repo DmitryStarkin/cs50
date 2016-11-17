@@ -41,8 +41,8 @@ $(function() {
     // https://developers.google.com/maps/documentation/javascript/reference#MapOptions
     var options = {
         center: {
-            lat: 61.7611,
-            lng: -157.3125
+            lat: 48.5132,
+            lng: 32.2597
         }, // Stanford, California
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -51,7 +51,11 @@ $(function() {
         styles: styles,
         zoom: 13,
         zoomControl: true,
-        mapTypeControl: true
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+            position: google.maps.ControlPosition.BOTTOM_LEFT
+        }
     };
 
     // get DOM node in which map will be instantiated

@@ -43,7 +43,7 @@ $(function() {
         center: {
             lat: 48.5132,
             lng: 32.2597
-        }, // Stanford, California
+        }, // Kirovograd, UA
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         maxZoom: 14,

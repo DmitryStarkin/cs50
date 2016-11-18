@@ -2,8 +2,7 @@ import feedparser
 import urllib.parse
 from random import shuffle, seed
 
-UKR_NEWS = ["https://news.yandex.ua/index.rss", "http://www.ukr-portal.com/php/rss_1.xml",
-"http://www.ua.rian.ru/export/rss2/index.xml", "http://feeds.feedburner.com/zaxid/rss_ua", "http://www.dt.ua/export.rss"]
+UKR_NEWS = ["https://news.yandex.ua/index.rss", "http://www.ukr-portal.com/php/rss_1.xml", "http://news.finance.ua/ru/rss", "http://www.ua.rian.ru/export/rss2/index.xml", "http://feeds.feedburner.com/zaxid/rss_ua", "http://www.dt.ua/export.rss", "https://malina-mix.com/anekdots.xml"]
 
 def lookup(geo, lang="us"):
     """Looks up articles for geo."""

@@ -38,7 +38,7 @@ def lookup(geo, lang="us"):
             if not feed["items"]:
                 
                 # there is always news
-                feed = feedparser.parse("http://news.yandex.ru/index.rss")
+                feed = feedparser.parse("http://feeds.feedburner.com/zaxid/rss_ua")
         else:
             
             # get from Onion

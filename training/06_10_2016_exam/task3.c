@@ -20,7 +20,7 @@ int main(void){
     char *tmp = line;
     for(;*tmp; tmp++){
         if(*tmp == ' '|| *tmp == '\n'){
-            curentNumber[count] = '\n';
+            curentNumber[count] = '\0';
             count=0;
             numbers[numCount++] = atoi( curentNumber); 
         } else {

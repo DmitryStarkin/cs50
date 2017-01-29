@@ -1,0 +1,7 @@
+db.execute ("CREATE VIRTUAL TABLE IF NOT EXISTS vplaces USING fts4 (admin_name1, place_name, postal_code, latitude, longitude, notindexed=latitude, notindexed=longitude, prefix='1,2')")
+
+db.execute ("INSERT OR REPLACE INTO vplaces (admin_name1, place_name, postal_code, latitude, longitude) SELECT admin_name1, place_name, postal_code, latitude, longitude FROM places")
+
+db.execute ("INSERT INTO vplaces(vplaces) VALUES('optimize')")
+
+key="AIzaSyB9Mn_NjxU4TKtaiXKBkCuskj7moU9CeRs"

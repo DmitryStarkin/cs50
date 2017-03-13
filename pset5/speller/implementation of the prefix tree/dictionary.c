@@ -16,27 +16,25 @@ struct contayner {
 };
 typedef struct contayner node;
 node *root;
-unsigned int sizeOfDicinary=0;
-    
+unsigned int sizeOfDicinary = 0;
+
 /**
  * Returns true if word is in dictionary else false.
  */
 bool check(const char *word) {
-    
     // TODO
-    register node *curentNode=root;
+    register node *curentNode = root;
     register int index;
-   
     for(; *word; word++) {
-        index = (*word==39) ? 26:tolower(*word)-97;
-        if (!curentNode->children[index]) {
+        index = (*word == 39) ? 26 : tolower(*word) - 97;
+        if(!curentNode->children[index]) {
             return false;
         }
-        curentNode=curentNode->children[index];
+        curentNode = curentNode->children[index];
     }
     if(curentNode->isWord) {
         return true;
-    } 
+    }
     return false;
 }
 
@@ -44,42 +42,38 @@ bool check(const char *word) {
  * Loads dictionary into memory. Returns true if successful else false.
  */
 bool load(const char *dictionary) {
-    
     // TODO
     uint8_t simbol;
-    root=calloc(1, sizeof(node));
-    register node *curentNode=root;
+    root = calloc(1, sizeof(node));
+    register node *curentNode = root;
     register int index;
-
     // open dictionary file
     FILE* dctionaryFile = fopen(dictionary, "rb");
-    if (dctionaryFile == NULL){
+    if(dctionaryFile == NULL) {
         return false;
     }
-
-    // read from file and add word to memory 
-    while(fread(&simbol, 1, 1, dctionaryFile)) { 
-        if (simbol==0x0a) {
-            curentNode->isWord=true;
-            curentNode=root;
+    // read from file and add word to memory
+    while(fread(&simbol, 1, 1, dctionaryFile)) {
+        if(simbol == 0x0a) {
+            curentNode->isWord = true;
+            curentNode = root;
             sizeOfDicinary++;
         } else {
-            index=(simbol==39) ? 26:simbol-97;
-            if (!curentNode->children[index]) {
-                curentNode->children[index]=calloc(1, sizeof(node));
+            index = (simbol == 39) ? 26 : simbol - 97;
+            if(!curentNode->children[index]) {
+                curentNode->children[index] = calloc(1, sizeof(node));
             }
-            curentNode=curentNode->children[index];
+            curentNode = curentNode->children[index];
         }
-    }  
-        fclose(dctionaryFile);
-        return true;
+    }
+    fclose(dctionaryFile);
+    return true;
 }
 
 /**
  * Returns number of words in dictionary if loaded else 0 if not yet loaded.
  */
 unsigned int size(void) {
-    
     // TODO
     return sizeOfDicinary;
 }
@@ -89,8 +83,8 @@ unsigned int size(void) {
  */
 
 void freeContayner(register node *curentNode) {
-    for (register int i=0; i<27; i++) {
-        if (curentNode->children[i]) freeContayner(curentNode->children[i]);
+    for(register int i = 0; i < 27; i++) {
+        if(curentNode->children[i]) freeContayner(curentNode->children[i]);
     }
     free(curentNode);
 }
@@ -99,9 +93,7 @@ void freeContayner(register node *curentNode) {
  * Unloads dictionary from memory. Returns true if successful else false.
  */
 bool unload(void) {
-    
     // TODO
-    freeContayner (root);
-      
+    freeContayner(root);
     return true;
 }
